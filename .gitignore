@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.sqlite3
+
+# Envs
+env/
+.venv/
+venv/
+ENV/
+
+# OS/IDE
+.DS_Store
+.idea/
+.vscode/
+
+# Secrets
+.env
+
+# Frontend build output (for Pages)
+dist/

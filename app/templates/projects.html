@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Projects</h1>
+
+{% for section in sections %}
+  <section class="project-section">
+    <h2 class="section-title">{{ section.title }}</h2>
+
+    <div class="project-grid">
+      {% for p in section.projects %}
+        <a class="project-card" href="{{ p.url }}" target="_blank" rel="noopener">
+          <h3>{{ p.title }}</h3>
+          <p>{{ p.description }}</p>
+          <div class="tags">
+            {% for t in p.tech %}
+              <span class="tag">{{ t }}</span>
+            {% endfor %}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+{% endfor %}
+
+{% endblock %}
