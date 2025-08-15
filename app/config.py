@@ -11,12 +11,12 @@ class Settings(BaseSettings):
     )
 
     # App meta
-    APP_NAME: str = Field(default="Mehedi Hasan Nirob — Portfolio API")
+    APP_NAME: str = Field(default="MHN Portfolio API")
 
-    # Env vars you set on Render
+    # Env vars (set these on Render)
     DATABASE_URL: str = Field(default="sqlite:///./app.db")
     ALLOWED_ORIGINS: str = Field(
-        default="http://localhost:8000, http://127.0.0.1:8000, https://nirob-0812.github.io"
+        default="http://localhost:8000, https://nirob-0812.github.io"
     )
     ADMIN_TOKEN: str = Field(default="dev-admin-token")
     SECRET_KEY: str = Field(default="change-me")
@@ -43,6 +43,6 @@ class Settings(BaseSettings):
 settings = Settings()
 
 
-# Backwards-compatible helper (your main.py imports this)
+# Backwards-compatible helper (used by main.py)
 def get_cors_origins() -> list[str]:
     return settings.cors_origins
