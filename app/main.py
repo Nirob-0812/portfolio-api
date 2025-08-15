@@ -1,3 +1,4 @@
+# app/main.py
 from fastapi import FastAPI, Request, Depends, Form
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
@@ -11,10 +12,12 @@ from app.routers import contact as contact_router
 from app.routers import projects as projects_router
 from app.routers import certificates as certificates_router
 
-# Create tables on startup
-Base.metadata.create_all(bind=engine)
+app = FastAPI(title=getattr(settings, "APP_NAME", "Portfolio API"))
 
-app = FastAPI(title=settings.APP_NAME)
+# Create tables on startup (safer than doing it at import time)
+@app.on_event("startup")
+def on_startup():
+    Base.metadata.create_all(bind=engine)
 
 # CORS
 app.add_middleware(
@@ -29,7 +32,7 @@ app.add_middleware(
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="app/templates")
 
-# Routers
+# Routers (API)
 app.include_router(contact_router.router)
 app.include_router(projects_router.router)
 app.include_router(certificates_router.router)
