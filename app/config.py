@@ -1,17 +1,17 @@
+# app/config.py
 from pydantic_settings import BaseSettings
-from typing import List
 
 class Settings(BaseSettings):
-    APP_NAME: str = "Mehedi Hasan Nirob — Portfolio"
     DATABASE_URL: str = "sqlite:///./app.db"
-    ALLOWED_ORIGINS: str = "*"
-    ADMIN_TOKEN: str = "changeme"
+    # ... your other settings ...
 
-    class Config:
-        env_file = ".env"
+    @property
+    def sqlalchemy_url(self) -> str:
+        url = self.DATABASE_URL
+        if url.startswith("postgres://"):
+            url = url.replace("postgres://", "postgresql+psycopg://", 1)
+        elif url.startswith("postgresql://") and "+psycopg" not in url:
+            url = url.replace("postgresql://", "postgresql+psycopg://", 1)
+        return url
 
 settings = Settings()
-
-def get_cors_origins() -> List[str]:
-    raw = settings.ALLOWED_ORIGINS or "*"
-    return [o.strip() for o in raw.split(",") if o.strip()]
