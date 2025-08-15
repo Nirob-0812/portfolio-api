@@ -1,17 +1,16 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, DeclarativeBase
-from app.config import settings  # Changed to absolute import
+from sqlalchemy.orm import sessionmaker, declarative_base
+from .config import settings
+
+SQLALCHEMY_DATABASE_URL = settings.sqlalchemy_url
 
 engine = create_engine(
-    settings.DATABASE_URL,
-    connect_args={"check_same_thread": False} if settings.DATABASE_URL.startswith("sqlite") else {},
+    SQLALCHEMY_DATABASE_URL,
+    connect_args={"check_same_thread": False} if SQLALCHEMY_DATABASE_URL.startswith("sqlite") else {},
+    pool_pre_ping=True,
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-
-class Base(DeclarativeBase):
-    pass
-
+Base = declarative_base()
 
 def get_db():
     db = SessionLocal()
