@@ -10,10 +10,13 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    # env vars you set on Render
+    # App meta
+    APP_NAME: str = Field(default="Mehedi Hasan Nirob — Portfolio API")
+
+    # Env vars you set on Render
     DATABASE_URL: str = Field(default="sqlite:///./app.db")
     ALLOWED_ORIGINS: str = Field(
-        default="http://localhost:8000, http://127.0.0.1:8000"
+        default="http://localhost:8000, http://127.0.0.1:8000, https://nirob-0812.github.io"
     )
     ADMIN_TOKEN: str = Field(default="dev-admin-token")
     SECRET_KEY: str = Field(default="change-me")
