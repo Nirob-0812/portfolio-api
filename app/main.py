@@ -5,11 +5,11 @@ from starlette.templating import Jinja2Templates
 from starlette.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
-from .config import settings, get_cors_origins
-from .database import engine, Base, get_db
-from .routers import contact as contact_router
-from .routers import projects as projects_router
-from .routers import certificates as certificates_router
+from app.config import settings, get_cors_origins
+from app.database import engine, Base, get_db
+from app.routers import contact as contact_router
+from app.routers import projects as projects_router
+from app.routers import certificates as certificates_router
 
 # Create tables on startup
 Base.metadata.create_all(bind=engine)
@@ -37,22 +37,27 @@ app.include_router(certificates_router.router)
 # Web pages
 @app.get("/")
 async def home(request: Request):
-    featured=projects_router.PROJECTS[:6]
+    featured = projects_router.PROJECTS[:6]
     return templates.TemplateResponse(
-        "index.html", 
-        {"request": request,"projects":featured})
+        "index.html",
+        {"request": request, "projects": featured}
+    )
 
 @app.get("/about")
 async def about(request: Request):
     return templates.TemplateResponse("about.html", {"request": request})
+
 @app.get("/resume")
 async def resume(request: Request):
-    return templates.TemplateResponse("resume.html",{"request":request})
+    return templates.TemplateResponse("resume.html", {"request": request})
 
 @app.get("/certificates")
 async def certificates(request: Request):
-    c_items=certificates_router.CERTIFICATES
-    return templates.TemplateResponse("certificates.html",{"request": request,"certificates":c_items})
+    c_items = certificates_router.CERTIFICATES
+    return templates.TemplateResponse(
+        "certificates.html",
+        {"request": request, "certificates": c_items}
+    )
 
 @app.get("/projects")
 async def projects(request: Request):
@@ -77,12 +82,15 @@ async def projects(request: Request):
 
     return templates.TemplateResponse(
         "projects.html",
-        {"request": request, "sections": sections},
+        {"request": request, "sections": sections}
     )
 
 @app.get("/contact")
 async def contact_get(request: Request):
-    return templates.TemplateResponse("contact.html", {"request": request, "sent": False})
+    return templates.TemplateResponse(
+        "contact.html",
+        {"request": request, "sent": False}
+    )
 
 @app.post("/contact")
 async def contact_post(
@@ -93,8 +101,11 @@ async def contact_post(
     message: str = Form(...),
     db: Session = Depends(get_db),
 ):
-    from .routers.contact import create_message
-    from .schemas import ContactCreate
+    from app.routers.contact import create_message
+    from app.schemas import ContactCreate
 
-    create_message(ContactCreate(name=name, email=email, subject=subject, message=message), db)
+    create_message(
+        ContactCreate(name=name, email=email, subject=subject, message=message),
+        db
+    )
     return RedirectResponse(url="/contact?sent=1", status_code=303)
