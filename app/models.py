@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import String, Text, Integer, DateTime, func
-from .database import Base
+from app.database import Base  # Changed to absolute import
 
 class ContactMessage(Base):
     __tablename__ = "contact_messages"
