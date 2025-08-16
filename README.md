@@ -19,6 +19,39 @@ Companion backend for my portfolio. Serves **projects**, **certificates**, and a
 
 ---
 
+---
+
+## 🗂 Structure
+
+```
+/
+├─ app/
+│  ├─ routers/
+│  │  ├─ __init__.py
+│  │  ├─ certificates.py
+│  │  ├─ contact.py
+│  │  └─ projects.py
+│  ├─ static/
+│  │  └─ __init__.py
+│  ├─ config.py
+│  ├─ database.py
+│  ├─ main.py                # Application entry point
+│  ├─ models.py
+│  └─ schemas.py
+├─ tests/
+│  └─ test_api.py            # API tests
+├─ .env.example              # Example environment variables
+├─ .gitignore
+├─ LICENSE
+├─ Procfile                  # Deployment process file
+├─ README.md
+├─ render.yaml               # Render deployment config
+└─ requirements.txt          # Dependencies
+
+```
+
+---
+
 ## 🧪 Endpoints
 
 ### `GET /api/projects/`
