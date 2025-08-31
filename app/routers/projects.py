@@ -9,8 +9,8 @@ PROJECTS: List[Dict] = [
     #----------Deployed projects-------------
     {
         "title": "AI Assistant Platform (API + UI)",
-        "description": "Lightweight GenAI system: a FastAPI backend exposes a unified /ai-task endpoint for Q&A, latest-answer retrieval, image generation, and content formatting—paired with a zero-build HTML/CSS/JS frontend that calls the API and renders results.",
-        "tech": ["Python", "FastAPI", "MCP", "SQLite", "JavaScript/HTML/CSS", "LLM (Gemini/HF)"],
+        "description": "FastAPI backend with static JS UI for Q&A, images, and content.",
+        "tech": ["Python", "FastAPI", "MCP", "LLM (Gemini/HF)"],
         "url": "https://nirob-0812.github.io/ai-task-ui/",
         "category": "deployed"
     },
